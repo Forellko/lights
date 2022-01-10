@@ -1,23 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+  const [color, setColor] = useState('green');
+
+  if (color === 'green') {
+    setTimeout(() => {
+      setColor('yellowDown');
+    }, 3000);
+  }
+
+  if (color === 'red') {
+    setTimeout(() => {
+      setColor('yellowUp');
+    }, 2000);
+  }
+
+  if (color === 'yellowUp') {
+    setTimeout(() => {
+      setColor('green');
+    }, 1000);
+  }
+
+  if (color === 'yellowDown') {
+    setTimeout(() => {
+      setColor('red');
+    }, 1000);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className={'green ' + (color === 'green' ? 'active' : '')}></div>
+      <div
+        className={
+          'yellow ' +
+          (color === 'yellowUp' || color === 'yellowDown' ? 'active' : '')
+        }
+      ></div>
+      <div className={'red ' + (color === 'red' ? 'active' : '')}></div>
     </div>
   );
 }
