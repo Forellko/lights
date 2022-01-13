@@ -1,43 +1,19 @@
 import './App.css';
-import React, { useState } from 'react';
+import Green from './routes/Green';
+import Yellow from './routes/Yellow';
+import Red from './routes/Red';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
-  const [color, setColor] = useState('green');
-
-  if (color === 'green') {
-    setTimeout(() => {
-      setColor('yellowDown');
-    }, 3000);
-  }
-
-  if (color === 'red') {
-    setTimeout(() => {
-      setColor('yellowUp');
-    }, 2000);
-  }
-
-  if (color === 'yellowUp') {
-    setTimeout(() => {
-      setColor('green');
-    }, 1000);
-  }
-
-  if (color === 'yellowDown') {
-    setTimeout(() => {
-      setColor('red');
-    }, 1000);
-  }
-
   return (
     <div className="App">
-      <div className={'green ' + (color === 'green' ? 'active' : '')}></div>
-      <div
-        className={
-          'yellow ' +
-          (color === 'yellowUp' || color === 'yellowDown' ? 'active' : '')
-        }
-      ></div>
-      <div className={'red ' + (color === 'red' ? 'active' : '')}></div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/green" element={<Green />}></Route>
+          <Route path="/yellow" element={<Yellow />}></Route>
+          <Route path="/red" element={<Red />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
