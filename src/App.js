@@ -1,7 +1,6 @@
 import './App.css';
-import Green from './routes/Green';
-import Yellow from './routes/Yellow';
-import Red from './routes/Red';
+import Lights from './routes/Lights';
+import Start from './routes/Start';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -9,9 +8,19 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/green" element={<Green />}></Route>
-          <Route path="/yellow" element={<Yellow />}></Route>
-          <Route path="/red" element={<Red />}></Route>
+          <Route path="/lights" element={<Start></Start>}></Route>
+          <Route
+            path="/lights/green"
+            element={<Lights currentLight="green" />}
+          ></Route>
+          <Route
+            path="/lights/yellow"
+            element={<Lights currentLight="yellow" />}
+          ></Route>
+          <Route
+            path="/lights/red"
+            element={<Lights currentLight="red" />}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>

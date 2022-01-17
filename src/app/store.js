@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import directionReducer from '../features/direction/directionSlice';
+import colorReducer from '../features/colors/colorSlice';
 
 export const store = configureStore({
   reducer: {
-    colors: directionReducer,
+    colors: colorReducer,
   },
 });
