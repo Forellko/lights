@@ -4,27 +4,32 @@ import {
   setYellow,
   setRed,
   selectColor,
-} from '../features/colors/colorSlice';
+  decrementTimer,
+  selectTimer,
+} from '../features/slices/slice';
 import '../App.css';
 import { useEffect } from 'react';
 
 export default function Green() {
   const dispatch = useDispatch();
   const color = useSelector(selectColor);
+  const timer = useSelector(selectTimer);
   window.history.pushState('', '', color);
 
   const styles = {
     green: 'green',
     yellow: 'yellow',
     red: 'red',
+    timer: 'timer',
+    save_button: 'save_button',
+    clear_button: 'clear_button',
+    save_text: 'save_text',
+    clear_text: 'clear_text',
   };
   styles[color] += ' active';
-
-  const times = {
-    green: 3000,
-    yellow: 1000,
-    red: 2000,
-  };
+  if (color === 'green' && (timer === 3 || timer === 1)) {
+    styles[color] = 'green';
+  }
 
   const actions = {
     green: setYellow,
@@ -32,17 +37,54 @@ export default function Green() {
     red: setGreen,
   };
 
+  const timersShows = {
+    green: '',
+    yellow: '',
+    red: '',
+  };
+  timersShows[color] = timer;
+
   useEffect(() => {
-    setTimeout(() => {
+    if (timer !== 0) {
+      setTimeout(() => {
+        dispatch(decrementTimer());
+      }, 1000);
+    } else {
       dispatch(actions[color]());
-    }, times[color]);
+    }
   });
 
   return (
     <div className="App">
-      <div className={styles.red}></div>
-      <div className={styles.yellow}></div>
-      <div className={styles.green}></div>
+      <div className={styles.red}>
+        <p className={styles.timer}>{timersShows['red']}</p>
+      </div>
+      <div className={styles.yellow}>
+        <p className={styles.timer}>{timersShows['yellow']}</p>
+      </div>
+      <div className={styles.green}>
+        <p className={styles.timer}>{timersShows['green']}</p>
+      </div>
+
+      <div
+        className={styles.save_button}
+        onClick={(e) => {
+          window.localStorage.setItem('color', color);
+          window.localStorage.setItem('timer', timer);
+        }}
+      >
+        <p className={styles.save_text}>SAVE</p>
+      </div>
+
+      <div
+        className={styles.clear_button}
+        onClick={(e) => {
+          window.localStorage.setItem('color', '');
+          window.localStorage.setItem('timer', '');
+        }}
+      >
+        <p className={styles.clear_text}>CLEAR</p>
+      </div>
     </div>
   );
 }
